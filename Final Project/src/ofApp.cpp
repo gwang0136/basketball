@@ -17,7 +17,8 @@ void ofApp::setup() {
     box2d.createGround();
         
     createBall();
-    
+    setRims();
+    setBackboard();
     
     auto hoop = make_shared<ofxBox2dRect>();
     hoop->setPhysics(0.0, 0.53, 0.9);
@@ -29,8 +30,8 @@ void ofApp::setup() {
 
 //--------------------------------------------------------------
 void ofApp::update() {
-    box2d.update();
-    
+    setRims();
+    setBackboard();
     checkIfScore();
     
     if(scored) {
@@ -44,6 +45,7 @@ void ofApp::update() {
     if(space_held) {
         power+=25;
     }
+    box2d.update();
 }
 
 
@@ -153,6 +155,16 @@ void ofApp::setRims() {
             rims.at(1)->setPosition(rims.at(1)->getPosition().x + moving,                                     rims.at(1)->getPosition().y);
         }
     }
+}
+
+void ofApp::setBackboard() {
+    auto backboard = make_shared<ofxBox2dRect>();
+    backboard->setPhysics(0.0, 0.53, 0.9);
+    backboard->setup(box2d.getWorld(),
+                     rims.at(0)->getPosition().x + rim_size/2 + backboard_offset_x,
+                     rims.at(0)->getPosition().x + rim_size/2 + backboard_offset_y,
+                     backboard_width, backboard_height);
+    backboard->enableGravity(false);
 }
 
 //--------------------------------------------------------------

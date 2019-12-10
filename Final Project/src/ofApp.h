@@ -18,6 +18,7 @@ public:
     void reload();
     void checkIfScore();
     void setRims();
+    void setBackboard();
     
     ofxBox2d box2d;
     vector   <shared_ptr<ofxBox2dCircle>> balls;
