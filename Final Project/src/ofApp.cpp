@@ -14,13 +14,14 @@ void ofApp::setup() {
     box2d.createGround();
         
         
-    float r = ofRandom(10, 20);
-    auto circle = make_shared<ofxBox2dCircle>();
-    circle->setPhysics(3.0, 0.53, 0.9);
-    circle->isFixed();
-    circle->setup(box2d.getWorld(), (ofGetWidth()/6), ofGetHeight()/2, r);
-    circle->enableGravity(false);
-    circles.push_back(circle);
+    float r = 15;
+    auto ball = make_shared<ofxBox2dCircle>();
+    ball->setPhysics(3.0, 0.53, 0.9);
+    ball->isFixed();
+    ball->setup(box2d.getWorld(), (ofGetWidth()/6), ofGetHeight()/2, r);
+    ball->enableGravity(false);
+    shot = false;
+    balls.push_back(ball);
 
 }
 
@@ -28,17 +29,19 @@ void ofApp::setup() {
 void ofApp::update() {
     box2d.update();
     
-    for(auto &circle : circles) {
-        if(circle->getVelocity().y == 0)
-        {
-            //to_destroy.push_back(circle);
-            //circles.pop_back();
+    if(shot) {
+        for(auto &ball : balls) {
+            if(ball->getVelocity().y == 0) {
+                to_destroy.push_back(ball);
+                balls.pop_back();
+            }
         }
-    }
 
-    for(auto &object : to_destroy) {
-        //object->destroy();
-        //to_destroy.pop_back();
+        for(auto &object : to_destroy) {
+            object->destroy();
+            to_destroy.pop_back();
+            shot = false;
+        }
     }
     
 }
@@ -48,10 +51,10 @@ void ofApp::update() {
 void ofApp::draw() {
     
     
-    for(auto &circle : circles) {
+    for(auto &ball : balls) {
         ofFill();
-        ofSetHexColor(0xf6c800);
-        circle->draw();
+        ofSetHexColor(0xffa500);
+        ball->draw();
     }
     
     // draw the ground
@@ -72,12 +75,12 @@ void ofApp::keyPressed(int key) {
     
     if(key == 'c') {
         float r = ofRandom(14, 20);
-        auto circle = make_shared<ofxBox2dCircle>();
-        circle->setPhysics(3.0, 0.53, 0.9);
-        circle->setup(box2d.getWorld(), mouseX, mouseY, r);
-        circles.push_back(circle);
+        auto ball = make_shared<ofxBox2dCircle>();
+        ball->setPhysics(3.0, 0.53, 0.9);
+        ball->setup(box2d.getWorld(), mouseX, mouseY, r);
+        balls.push_back(ball);
         
-        shapes.push_back(circle);
+        shapes.push_back(ball);
     }
     
     if(key == 'b') {
@@ -97,13 +100,12 @@ void ofApp::keyPressed(int key) {
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key) {
     if(key == ' ') {
-        float r = ofRandom(14, 20);
-        auto circle = make_shared<ofxBox2dCircle>();
-        circle->setPhysics(3.0, 0.53, 0.9);
-        circle->setup(box2d.getWorld(), mouseX, mouseY, r);
-        circles.push_back(circle);
-        
-        shapes.push_back(circle);
+        for(auto &ball : balls) {
+            ball->enableGravity(true);
+            shot = true;
+            ofVec2f direction = ofVec2f(1,-1);
+            ball->addForce(direction,1000);
+        }
     }
 }
 
