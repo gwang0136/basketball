@@ -27,4 +27,5 @@ public:
     bool shot;
     bool space_held;
     int power;
+    
 };

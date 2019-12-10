@@ -19,13 +19,19 @@ void ofApp::setup() {
     float r = 15;
     auto ball = make_shared<ofxBox2dCircle>();
     ball->setPhysics(3.0, 0.53, 0.9);
-    ball->isFixed();
     ball->setup(box2d.getWorld(), (ofGetWidth()/6), ofGetHeight()/2, r);
     ball->enableGravity(false);
     shot = false;
     power = 0;
     balls.push_back(ball);
-
+    
+    
+    auto hoop = make_shared<ofxBox2dRect>();
+    hoop->setPhysics(0.0, 0.53, 0.9);
+    hoop->setup(box2d.getWorld(), 2*(ofGetWidth()/6)+105,(ofGetHeight()/4)-60, 10, 150);
+    hoop->enableGravity(false);
+    
+    boxes.push_back(hoop);
 }
 
 //--------------------------------------------------------------
@@ -59,7 +65,7 @@ void ofApp::update() {
     }
     
     if(space_held) {
-        power+=10;
+        power+=25;
     }
 }
 
@@ -73,7 +79,15 @@ void ofApp::draw() {
         ofSetHexColor(0xffa500);
         ball->draw();
     }
-    
+    for(auto &hoop : boxes) {
+        ofFill();
+        ofSetHexColor(0xffffff);
+        hoop->draw();
+    }
+    ofSetHexColor(0xff0000);
+    ofDrawRectangle(2*(ofGetWidth()/6),ofGetHeight()/4, 100, 5);
+    ofSetHexColor(0xffffff);
+    //ofDrawRectangle(2*(ofGetWidth()/6)+100,(ofGetHeight()/4)-120, 10, 150);
     // draw the ground
     box2d.drawGround();
     
@@ -81,7 +95,6 @@ void ofApp::draw() {
     info += "Hold [space] to increase power\n";
     info += "Let go of [space] to shoot\n";
     info += "Score: "+ofToString(score)+"\n";
-    info += "Total Joints: "+ofToString(box2d.getJointCount())+"\n\n";
     info += "FPS: "+ofToString(ofGetFrameRate(), 1)+"\n";
     ofSetHexColor(0x444342);
     ofDrawBitmapString(info, 30, 30);
@@ -93,21 +106,25 @@ void ofApp::keyPressed(int key) {
     if(key == 't') ofToggleFullscreen();
     
     if(key == ' ') {
-        space_held = true;
+        if(!shot) {
+            space_held = true;
+        }
     }
 }
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key) {
     if(key == ' ') {
-        space_held = false;
-        for(auto &ball : balls) {
-            ball->enableGravity(true);
-            shot = true;
-            ofVec2f direction = ofVec2f(1,-1);
-            ball->addForce(direction,power);
+        if(!shot) {
+            space_held = false;
+            for(auto &ball : balls) {
+                ball->enableGravity(true);
+                shot = true;
+                ofVec2f direction = ofVec2f(1,-1);
+                ball->addForce(direction,power);
+            }
+            power = 0;
         }
-        power = 0;
     }
 }
 
