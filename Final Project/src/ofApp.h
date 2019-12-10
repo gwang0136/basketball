@@ -1,6 +1,7 @@
 #pragma once
 #include "ofMain.h"
 #include "ofxBox2d.h"
+#include "globals.h"
 
 class ofApp : public ofBaseApp {
     
@@ -12,20 +13,24 @@ public:
     
     void keyPressed(int key);
     void keyReleased(int key);
-    void mouseMoved(int x, int y);
-    void mouseDragged(int x, int y, int button);
-    void mousePressed(int x, int y, int button);
-    void mouseReleased(int x, int y, int button);
-    void resized(int w, int h);
     
-    ofxBox2d box2d;              //    the box2d world
-    vector   <shared_ptr<ofxBox2dCircle>> balls;          //    default box2d circles
+    void createBall();
+    void reload();
+    void checkIfScore();
+    void setRims();
+    
+    ofxBox2d box2d;
+    vector   <shared_ptr<ofxBox2dCircle>> balls;
     vector   <shared_ptr<ofxBox2dCircle>> to_destroy;
-    vector   <shared_ptr<ofxBox2dRect>>   boxes;              //    defalut box2d rects
-    vector   <shared_ptr<ofxBox2dBaseShape>>  shapes;
+    vector   <shared_ptr<ofxBox2dRect>>   boxes;
+    vector   <shared_ptr<ofxBox2dRect>>   rims;
+    
     int score;
     bool shot;
     bool space_held;
     int power;
+    bool scored;
+    int level;
+    int moving;
     
 };

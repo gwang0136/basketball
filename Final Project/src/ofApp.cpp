@@ -1,10 +1,11 @@
 #include "ofApp.h"
 
-
-
 //--------------------------------------------------------------
 void ofApp::setup() {
     score = 0;
+    level = 1;                      // start on easy
+    moving = -1;                    // when reaching hard level, rim will move left first
+    scored = false;
     ofSetVerticalSync(true);
     ofBackgroundHex(0xfdefc2);
     ofSetLogLevel(OF_LOG_NOTICE);
@@ -15,15 +16,7 @@ void ofApp::setup() {
     box2d.setFPS(60.0);
     box2d.createGround();
         
-        
-    float r = 15;
-    auto ball = make_shared<ofxBox2dCircle>();
-    ball->setPhysics(3.0, 0.53, 0.9);
-    ball->setup(box2d.getWorld(), (ofGetWidth()/6), ofGetHeight()/2, r);
-    ball->enableGravity(false);
-    shot = false;
-    power = 0;
-    balls.push_back(ball);
+    createBall();
     
     
     auto hoop = make_shared<ofxBox2dRect>();
@@ -38,32 +31,16 @@ void ofApp::setup() {
 void ofApp::update() {
     box2d.update();
     
-    if(shot) {
-        for(auto &ball : balls) {
-            if(ball->getVelocity().y == 0 ||
-               ofxBox2dBaseShape::shouldRemoveOffScreen(ball)) {
-                to_destroy.push_back(ball);
-                balls.pop_back();
-            }
-        }
-
-        for(auto &object : to_destroy) {
-            object->destroy();
-            to_destroy.pop_back();
-            shot = false;
-            
-        }
-        
-        if(balls.empty()) {
-            auto new_ball = make_shared<ofxBox2dCircle>();
-            new_ball->setPhysics(3.0, 0.53, 0.9);
-            new_ball->isFixed();
-            new_ball->setup(box2d.getWorld(), (ofGetWidth()/6), ofGetHeight()/2, 15);
-            new_ball->enableGravity(false);
-            balls.push_back(new_ball);
-        }
+    checkIfScore();
+    
+    if(scored) {
+        score++;
     }
     
+    if(shot) {
+        reload();
+    }
+
     if(space_held) {
         power+=25;
     }
@@ -84,11 +61,17 @@ void ofApp::draw() {
         ofSetHexColor(0xffffff);
         hoop->draw();
     }
-    ofSetHexColor(0xff0000);
-    ofDrawRectangle(2*(ofGetWidth()/6),ofGetHeight()/4, 100, 5);
+    
+    for(auto &rim : rims) {
+        ofFill();
+        ofSetHexColor(0xff0000);
+        rim->draw();
+    }
+    
+    ofDrawRectangle(rims.at(0)->getPosition().x + rim_size/2,
+                    rims.at(1)->getPosition().y - rim_size/2, hoop_length, hoop_width);
+    
     ofSetHexColor(0xffffff);
-    //ofDrawRectangle(2*(ofGetWidth()/6)+100,(ofGetHeight()/4)-120, 10, 150);
-    // draw the ground
     box2d.drawGround();
     
     string info = "";
@@ -129,23 +112,85 @@ void ofApp::keyReleased(int key) {
 }
 
 //--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y ) {
+void ofApp::createBall() {
+    auto ball = make_shared<ofxBox2dCircle>();
+    ball->setPhysics(3.0, 0.53, 0.9);
+    ball->setup(box2d.getWorld(), (ofGetWidth()/6), ofGetHeight()/2, ball_size);
+    ball->enableGravity(false);
+    balls.push_back(ball);
+}
+
+void ofApp::setRims() {
+    if(rims.empty()) {
+        auto front_rim = make_shared<ofxBox2dRect>();
+        front_rim->setPhysics(0.0, 0.53, 0.9);
+        front_rim->setup(box2d.getWorld(), 2*(ofGetWidth()/6),(ofGetHeight()/2), rim_size, rim_size);
+        front_rim->enableGravity(false);
+        rims.push_back(front_rim);
+        
+        auto back_rim = make_shared<ofxBox2dRect>();
+        back_rim->setPhysics(0.0, 0.53, 0.9);
+        back_rim->setup(box2d.getWorld(), 2*(ofGetWidth()/6)+rim_size + hoop_length,(ofGetHeight()/2), rim_size, rim_size);
+        back_rim->enableGravity(false);
+        rims.push_back(back_rim);
+    }
+    else if(level == 1) { // easy difficulty
+        rims.at(0)->setPosition(2*(ofGetWidth()/6), (ofGetHeight()/2));
+        rims.at(1)->setPosition(2*(ofGetWidth()/6)+rim_size,(ofGetHeight()/2));
+    }
+    else if(level == 2) { // medium difficulty
+        rims.at(0)->setPosition(4*(ofGetWidth()/6), (ofGetHeight()/2));
+        rims.at(1)->setPosition(4*(ofGetWidth()/6)+rim_size,(ofGetHeight()/2));
+    }
+    else if(level == 3) { // hard difficulty
+        if(rims.at(0)->getPosition() == ofVec2f(4*(ofGetWidth()/6)+1,(ofGetHeight()/2)) ||
+           rims.at(0)->getPosition() == ofVec2f(2*(ofGetWidth()/6),(ofGetHeight()/2)))
+        {
+            moving *= -1;
+        }
+        else {
+            rims.at(0)->setPosition(rims.at(0)->getPosition().x + moving,                                     rims.at(0)->getPosition().y);
+            rims.at(1)->setPosition(rims.at(1)->getPosition().x + moving,                                     rims.at(1)->getPosition().y);
+        }
+    }
+}
+
+//--------------------------------------------------------------
+void ofApp::reload() {
+    for(auto &ball : balls) {
+        if(ball->getVelocity().y == 0 ||
+           ofxBox2dBaseShape::shouldRemoveOffScreen(ball)) {
+            to_destroy.push_back(ball);
+            balls.pop_back();
+        }
+    }
+
+    for(auto &object : to_destroy) {
+        object->destroy();
+        to_destroy.pop_back();
+        shot = false;
+        
+        if(!scored) {
+            score = 0;
+            level = 0;
+        }
+        else {
+            scored = !scored;
+        }
+    }
     
+    if(balls.empty()) {
+        createBall();
+    }
 }
 
-//--------------------------------------------------------------
-void ofApp::mouseDragged(int x, int y, int button) {
-}
-
-//--------------------------------------------------------------
-void ofApp::mousePressed(int x, int y, int button) {
-    
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button) {
-}
-
-//--------------------------------------------------------------
-void ofApp::resized(int w, int h){
+void ofApp::checkIfScore() {
+    for(auto &ball : balls) {
+     if (ball->getPosition().x >= rims.at(0)->getPosition().x &&
+         ball->getPosition().x <= rims.at(1)->getPosition().x &&
+         ball->getPosition().y == rims.at(0)->getPosition().y)
+     {
+         scored = true;
+     }
+    }
 }

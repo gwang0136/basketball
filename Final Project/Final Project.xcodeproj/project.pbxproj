@@ -186,8 +186,7 @@
 		9D2AAD73C80F0E40708A2F59 /* ofxBox2dParticleSystem.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = ofxBox2dParticleSystem.h; path = "../../../Downloads/of_v20191112_osx_release/addons/ofxBox2d-master/src/ofxBox2dParticleSystem.h"; sourceTree = SOURCE_ROOT; };
 		9E2D506C14C66DAAA866BF41 /* ofxBox2dContactListener.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = ofxBox2dContactListener.h; path = "../../../Downloads/of_v20191112_osx_release/addons/ofxBox2d-master/src/ofxBox2dContactListener.h"; sourceTree = SOURCE_ROOT; };
 		9E6FE2B7830DD0953AE35BD3 /* b2Particle.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = b2Particle.cpp; path = "../../../Downloads/of_v20191112_osx_release/addons/ofxBox2d-master/libs/Box2D/Particle/b2Particle.cpp"; sourceTree = SOURCE_ROOT; };
-		A2A1C2E923A02EB8002116BF /* constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = constants.h; sourceTree = "<group>"; };
-		A2A1C2EA23A0389B002116BF /* shootingUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = shootingUtils.h; sourceTree = "<group>"; };
+		A2A1C2E923A02EB8002116BF /* globals.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = globals.h; sourceTree = "<group>"; };
 		A2EFDB795C498CF9A0665F81 /* b2TrackedBlock.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = b2TrackedBlock.h; path = "../../../Downloads/of_v20191112_osx_release/addons/ofxBox2d-master/libs/Box2D/Common/b2TrackedBlock.h"; sourceTree = SOURCE_ROOT; };
 		A57BDF621EB776209A8943D2 /* b2TrackedBlock.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = b2TrackedBlock.cpp; path = "../../../Downloads/of_v20191112_osx_release/addons/ofxBox2d-master/libs/Box2D/Common/b2TrackedBlock.cpp"; sourceTree = SOURCE_ROOT; };
 		A75E8E34AF9B4EBDDD31A72E /* b2ChainAndCircleContact.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = b2ChainAndCircleContact.cpp; path = "../../../Downloads/of_v20191112_osx_release/addons/ofxBox2d-master/libs/Box2D/Dynamics/Contacts/b2ChainAndCircleContact.cpp"; sourceTree = SOURCE_ROOT; };
@@ -1015,9 +1014,8 @@
 			children = (
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
-				A2A1C2EA23A0389B002116BF /* shootingUtils.h */,
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
-				A2A1C2E923A02EB8002116BF /* constants.h */,
+				A2A1C2E923A02EB8002116BF /* globals.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
