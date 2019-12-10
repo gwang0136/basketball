@@ -25,4 +25,6 @@ public:
     vector   <shared_ptr<ofxBox2dBaseShape>>  shapes;
     int score;
     bool shot;
+    bool space_held;
+    int power;
 };

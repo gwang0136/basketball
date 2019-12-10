@@ -1,5 +1,7 @@
 #include "ofApp.h"
 
+
+
 //--------------------------------------------------------------
 void ofApp::setup() {
     score = 0;
@@ -21,6 +23,7 @@ void ofApp::setup() {
     ball->setup(box2d.getWorld(), (ofGetWidth()/6), ofGetHeight()/2, r);
     ball->enableGravity(false);
     shot = false;
+    power = 0;
     balls.push_back(ball);
 
 }
@@ -31,7 +34,8 @@ void ofApp::update() {
     
     if(shot) {
         for(auto &ball : balls) {
-            if(ball->getVelocity().y == 0) {
+            if(ball->getVelocity().y == 0 ||
+               ofxBox2dBaseShape::shouldRemoveOffScreen(ball)) {
                 to_destroy.push_back(ball);
                 balls.pop_back();
             }
@@ -41,9 +45,22 @@ void ofApp::update() {
             object->destroy();
             to_destroy.pop_back();
             shot = false;
+            
+        }
+        
+        if(balls.empty()) {
+            auto new_ball = make_shared<ofxBox2dCircle>();
+            new_ball->setPhysics(3.0, 0.53, 0.9);
+            new_ball->isFixed();
+            new_ball->setup(box2d.getWorld(), (ofGetWidth()/6), ofGetHeight()/2, 15);
+            new_ball->enableGravity(false);
+            balls.push_back(new_ball);
         }
     }
     
+    if(space_held) {
+        power+=10;
+    }
 }
 
 
@@ -73,39 +90,24 @@ void ofApp::draw() {
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key) {
     
-    if(key == 'c') {
-        float r = ofRandom(14, 20);
-        auto ball = make_shared<ofxBox2dCircle>();
-        ball->setPhysics(3.0, 0.53, 0.9);
-        ball->setup(box2d.getWorld(), mouseX, mouseY, r);
-        balls.push_back(ball);
-        
-        shapes.push_back(ball);
-    }
-    
-    if(key == 'b') {
-        float w = ofRandom(14, 20);
-        float h = ofRandom(14, 20);
-        auto rect = make_shared<ofxBox2dRect>();
-        rect->setPhysics(3.0, 0.53, 0.9);
-        rect->setup(box2d.getWorld(), mouseX, mouseY, w, h);
-        boxes.push_back(rect);
-        
-        shapes.push_back(rect);
-    }
-    
     if(key == 't') ofToggleFullscreen();
+    
+    if(key == ' ') {
+        space_held = true;
+    }
 }
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key) {
     if(key == ' ') {
+        space_held = false;
         for(auto &ball : balls) {
             ball->enableGravity(true);
             shot = true;
             ofVec2f direction = ofVec2f(1,-1);
-            ball->addForce(direction,1000);
+            ball->addForce(direction,power);
         }
+        power = 0;
     }
 }
 
