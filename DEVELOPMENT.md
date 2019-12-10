@@ -22,3 +22,5 @@ A log of my work history on this project.
   - Successfully installed and began working with box2d.
   - Began fiddling with creating a game environment as well as developing models for the ball and hoop.
   - Successfully implemented a progressive shooting mechanic as well as a reloading mechanic.
+  - Successfully implemented a solid model for the hoop.
+  
