@@ -58,6 +58,8 @@
 		A095F416D117300C52D5552E /* ofxBox2dUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 31F27FDAAD90073353EEB06A /* ofxBox2dUtils.cpp */; };
 		A0992A4F254A54EDDC56A3DF /* b2FreeList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AF65203449BE3F069FB736F /* b2FreeList.cpp */; };
 		A1027C0CB9BE2027AF0AD5B9 /* b2RopeJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0273AAE9F569A63DB9E5369B /* b2RopeJoint.cpp */; };
+		A2782C3B23A090B8007E160F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A2782C3A23A090B8007E160F /* main.cpp */; };
+		A2782C3D23A0914B007E160F /* app_test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A2782C3C23A0914B007E160F /* app_test.cpp */; };
 		A448ACA7FD0988FF9CC4EE6F /* b2Timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 678B8D4C83330BE151FAF138 /* b2Timer.cpp */; };
 		A646EA20756EB5C3FF3EEB3E /* b2Collision.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92D3D02F0C08CE9D81B44542 /* b2Collision.cpp */; };
 		A75CC287D6A23082B2DC58C3 /* b2Contact.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35920E418A55015691FC4C8B /* b2Contact.cpp */; };
@@ -190,6 +192,9 @@
 		9D2AAD73C80F0E40708A2F59 /* ofxBox2dParticleSystem.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = ofxBox2dParticleSystem.h; path = "../../../Downloads/of_v20191112_osx_release/addons/ofxBox2d-master/src/ofxBox2dParticleSystem.h"; sourceTree = SOURCE_ROOT; };
 		9E2D506C14C66DAAA866BF41 /* ofxBox2dContactListener.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = ofxBox2dContactListener.h; path = "../../../Downloads/of_v20191112_osx_release/addons/ofxBox2d-master/src/ofxBox2dContactListener.h"; sourceTree = SOURCE_ROOT; };
 		9E6FE2B7830DD0953AE35BD3 /* b2Particle.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = b2Particle.cpp; path = "../../../Downloads/of_v20191112_osx_release/addons/ofxBox2d-master/libs/Box2D/Particle/b2Particle.cpp"; sourceTree = SOURCE_ROOT; };
+		A2782C3923A09050007E160F /* catch.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = catch.hpp; sourceTree = "<group>"; };
+		A2782C3A23A090B8007E160F /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		A2782C3C23A0914B007E160F /* app_test.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = app_test.cpp; sourceTree = "<group>"; };
 		A2EFDB795C498CF9A0665F81 /* b2TrackedBlock.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = b2TrackedBlock.h; path = "../../../Downloads/of_v20191112_osx_release/addons/ofxBox2d-master/libs/Box2D/Common/b2TrackedBlock.h"; sourceTree = SOURCE_ROOT; };
 		A57BDF621EB776209A8943D2 /* b2TrackedBlock.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = b2TrackedBlock.cpp; path = "../../../Downloads/of_v20191112_osx_release/addons/ofxBox2d-master/libs/Box2D/Common/b2TrackedBlock.cpp"; sourceTree = SOURCE_ROOT; };
 		A75E8E34AF9B4EBDDD31A72E /* b2ChainAndCircleContact.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = b2ChainAndCircleContact.cpp; path = "../../../Downloads/of_v20191112_osx_release/addons/ofxBox2d-master/libs/Box2D/Dynamics/Contacts/b2ChainAndCircleContact.cpp"; sourceTree = SOURCE_ROOT; };
@@ -683,6 +688,16 @@
 			name = "ofxProgressBar-master";
 			sourceTree = "<group>";
 		};
+		A2782C3823A08F5E007E160F /* tests */ = {
+			isa = PBXGroup;
+			children = (
+				A2782C3923A09050007E160F /* catch.hpp */,
+				A2782C3A23A090B8007E160F /* main.cpp */,
+				A2782C3C23A0914B007E160F /* app_test.cpp */,
+			);
+			path = tests;
+			sourceTree = "<group>";
+		};
 		B2D98E4AA567BF58B1C6D6E6 /* Triangle */ = {
 			isa = PBXGroup;
 			children = (
@@ -1024,6 +1039,7 @@
 			children = (
 				E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */,
 				E4EB6923138AFD0F00A09F29 /* Project.xcconfig */,
+				A2782C3823A08F5E007E160F /* tests */,
 				E4B69E1C0A3A1BDC003C02F2 /* src */,
 				E42962AA2163EDD300A6A9E2 /* openFrameworks */,
 				BB4B014C10F69532006C3DED /* addons */,
@@ -1186,6 +1202,7 @@
 				CB266E26546E81DFC6E87928 /* b2CollideEdge.cpp in Sources */,
 				7F4B1A8C4228AC0521B9FB5C /* b2CollidePolygon.cpp in Sources */,
 				A646EA20756EB5C3FF3EEB3E /* b2Collision.cpp in Sources */,
+				A2782C3D23A0914B007E160F /* app_test.cpp in Sources */,
 				B0C48E768266C29977FA2709 /* b2Distance.cpp in Sources */,
 				813BF76C660673929993BD96 /* b2DynamicTree.cpp in Sources */,
 				BCB8C715A18905F6A92F3834 /* b2TimeOfImpact.cpp in Sources */,
@@ -1210,6 +1227,7 @@
 				9D5FD3525F3E5BAFFA832EC9 /* b2DistanceJoint.cpp in Sources */,
 				16DF250C4F30AB45C238299C /* b2FrictionJoint.cpp in Sources */,
 				1635BA0CDDEE7B29CC290581 /* b2GearJoint.cpp in Sources */,
+				A2782C3B23A090B8007E160F /* main.cpp in Sources */,
 				2B58234078370FB88013E551 /* b2Joint.cpp in Sources */,
 				770C88C0667B7099FE1D962E /* b2MotorJoint.cpp in Sources */,
 				6D89D1F58CAAC8F368801A68 /* b2MouseJoint.cpp in Sources */,

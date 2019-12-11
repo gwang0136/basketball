@@ -2,8 +2,8 @@
 
 //--------------------------------------------------------------
 void ofApp::initializeVariables() {
-    score = 0;
-    level = 1;                      // start on easy
+    score = 1000;
+    level = 3;                      // start on easy
     moving = -1;                    // when reaching hard level, rim will move left first
     scored = false;
     shot = false;
