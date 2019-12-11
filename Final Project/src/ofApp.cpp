@@ -1,7 +1,7 @@
 #include "ofApp.h"
 
 //--------------------------------------------------------------
-void ofApp::setup() {
+void ofApp::initializeVariables() {
     score = 0;
     level = 1;                      // start on easy
     moving = -1;                    // when reaching hard level, rim will move left first
@@ -11,6 +11,11 @@ void ofApp::setup() {
     shots = 0;
     prev = -1;
     high_score = 0;
+}
+//--------------------------------------------------------------
+void ofApp::setup() {
+    initializeVariables();
+    
     ofSetVerticalSync(true);
     ofBackgroundHex(0xfdefc2);
     ofSetLogLevel(OF_LOG_NOTICE);

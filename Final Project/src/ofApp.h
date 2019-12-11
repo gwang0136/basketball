@@ -21,6 +21,20 @@ public:
     void setRims();
     void setBackboard();
     void setLevel();
+    void initializeVariables();
+    
+    int shots;
+    int prev;
+    int high_score;
+    int score;
+    int power;
+    int level;
+    int moving;
+    
+    bool shot;
+    bool space_held;
+    bool scored;
+    bool counted;
     
     ofxBox2d box2d;
     vector   <shared_ptr<ofxBox2dCircle>> balls;
@@ -28,19 +42,6 @@ public:
     vector   <shared_ptr<ofxBox2dRect>>   backboards;
     vector   <shared_ptr<ofxBox2dRect>>   rims;
     
-    int score;
-    bool shot;
-    bool space_held;
-    int power;
-    bool scored;
-    int level;
-    int moving;
-    bool counted;
-    int shots;
-    int prev;
-    int high_score;
-    
     ofxProgressBar progressBar;
-    
     void createProgressBar();
 };
