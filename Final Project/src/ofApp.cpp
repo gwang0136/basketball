@@ -33,7 +33,7 @@ void ofApp::update() {
     box2d.update();
     setRims();
     setBackboard();
-    setLevel();
+    
     checkIfScore();
     
     if(scored) {
@@ -125,7 +125,7 @@ void ofApp::keyReleased(int key) {
 //--------------------------------------------------------------
 void ofApp::createBall() {
     auto ball = make_shared<ofxBox2dCircle>();
-    ball->setPhysics(3.0, 0.53, 0.9);
+    ball->setPhysics(3.0, 0.53, 0.6);
     ball->setup(box2d.getWorld(), (ofGetWidth()/6), ofGetHeight()/2, ball_size);
     ball->enableGravity(false);
     balls.push_back(ball);
@@ -155,8 +155,8 @@ void ofApp::setRims() {
         rims.at(1)->setPosition(4*(ofGetWidth()/6)+hoop_length,(ofGetHeight()/2));
     }
     else if(level == 3) { // hard difficulty
-        if(rims.at(0)->getPosition().x >= 4*(ofGetWidth()/6) ||
-           rims.at(0)->getPosition().x <= 2*(ofGetWidth()/6))
+        if(rims.at(0)->getPosition().x >= 4*(ofGetWidth()/6)+1 ||
+           rims.at(0)->getPosition().x <= 2*(ofGetWidth()/6)-1)
         {
             moving *= -1;
         }
@@ -209,6 +209,7 @@ void ofApp::reload() {
         else {
             scored = !scored;
         }
+        setLevel();
     }
     
     if(balls.empty()) {
@@ -235,11 +236,11 @@ void ofApp::checkIfScore() {
 
 //--------------------------------------------------------------
 void ofApp::setLevel() {
-    if(score >= 0 && score <= 3)
+    if(score >= 0 && score < to_level_up)
         level = 1;
-    if(score >= 3 && score <= 6)
+    if(score >= to_level_up && score < 2*to_level_up)
         level = 2;
-    else if(score > 6)
+    else if(score >= 2*to_level_up)
         level = 3;
 }
 

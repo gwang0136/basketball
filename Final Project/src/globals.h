@@ -27,4 +27,7 @@ const int threshold = 10;
 /*Move Speed*/
 const int speed = 5;
 
+/*Level Up Threshold*/
+const int to_level_up = 1;
+
 #endif /* globals_h */
