@@ -23,4 +23,9 @@ A log of my work history on this project.
   - Began fiddling with creating a game environment as well as developing models for the ball and hoop.
   - Successfully implemented a progressive shooting mechanic as well as a reloading mechanic.
   - Successfully implemented a solid model for the hoop.
+  - Successfully implemented the score mechanics as well as a level-up mechanic.
+  - Successfully implemented 3 levels of varying difficulty.
+  - Successfully implemented a progress bar to represent the power-up on a shot.
+  - Successfully updated the styling of the basket.
+  - Successfully implemented a high-score mechanic to keep track of the current high-score in the session.
   
