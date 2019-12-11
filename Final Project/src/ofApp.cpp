@@ -67,10 +67,19 @@ void ofApp::draw() {
         ofSetHexColor(0xffa500);
         ball->draw();
     }
-    for(auto &backboard : backboards) {
+    
+    if(!backboards.empty()) {
         ofFill();
         ofSetHexColor(0xffffff);
-        backboard->draw();
+        backboards.at(0)->draw();
+        
+        ofFill();
+        ofSetHexColor(0x708090);
+        backboards.at(1)->draw();
+        
+        ofFill();
+        ofSetHexColor(0x708090);
+        backboards.at(2)->draw();
     }
     
     for(auto &rim : rims) {
@@ -181,14 +190,36 @@ void ofApp::setBackboard() {
                          backboard_width, backboard_height);
         backboard->enableGravity(false);
         backboards.push_back(backboard);
+        
+        auto support = make_shared<ofxBox2dRect>();
+        support->setPhysics(0.0, 0.53, 0.4);
+        support->setup(box2d.getWorld(),
+                         backboards.at(0)->getPosition().x + backboard_width/2 + support_width/2,
+                         backboards.at(0)->getPosition().y,
+                         support_width, support_height);
+        support->enableGravity(false);
+        backboards.push_back(support);
+        
+        auto stanchion = make_shared<ofxBox2dRect>();
+        stanchion->setPhysics(0.0, 0.53, 0.4);
+        stanchion->setup(box2d.getWorld(),
+                         backboards.at(0)->getPosition().x + backboard_width/2 + stanchion_width/2 + support_width,
+                         backboards.at(0)->getPosition().y + stanchion_offset_y,
+                         stanchion_width, stanchion_height);
+        stanchion->enableGravity(false);
+        backboards.push_back(stanchion);
+        
     }
     else {
-        for(auto &backboard : backboards)
-        {
-            backboard->setPosition(rims.at(0)->getPosition().x + rim_size/2 + backboard_offset_x,rims.at(0)->getPosition().y + rim_size/2 + backboard_offset_y);
-        }
-    }
+        auto backboard = backboards.at(0);
+        backboard->setPosition(rims.at(0)->getPosition().x + rim_size/2 +   backboard_offset_x,rims.at(0)->getPosition().y + rim_size/2 + backboard_offset_y);
         
+        auto support = backboards.at(1);
+        support->setPosition(backboards.at(0)->getPosition().x + backboard_width/2 + support_width/2, backboards.at(0)->getPosition().y);
+        
+        auto stanchion = backboards.at(2);
+        stanchion->setPosition(backboards.at(0)->getPosition().x + backboard_width/2 + stanchion_width/2 + support_width, backboards.at(0)->getPosition().y + stanchion_offset_y);
+    }
 }
 
 //--------------------------------------------------------------

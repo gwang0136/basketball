@@ -20,6 +20,11 @@ const int backboard_width = 10;
 const int backboard_height = 150;
 const int backboard_offset_x = 55;
 const int backboard_offset_y = -60;
+const int stanchion_width = 15;
+const int stanchion_height = 400;
+const int stanchion_offset_y = 200;
+const int support_width = 20;
+const int support_height = 10;
 
 /*Score Threshold*/
 const int threshold = 10;
