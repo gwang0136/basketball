@@ -39,4 +39,8 @@ public:
     int shots;
     int prev;
     int high_score;
+    
+    ofxProgressBar progressBar;
+    
+    void createProgressBar();
 };

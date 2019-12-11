@@ -3,7 +3,7 @@
 //--------------------------------------------------------------
 void ofApp::setup() {
     score = 0;
-    level = 2;                      // start on easy
+    level = 1;                      // start on easy
     moving = -1;                    // when reaching hard level, rim will move left first
     scored = false;
     shot = false;
@@ -24,6 +24,8 @@ void ofApp::setup() {
     createBall();
     setRims();
     setBackboard();
+    createProgressBar();
+    
 }
 
 //--------------------------------------------------------------
@@ -86,6 +88,9 @@ void ofApp::draw() {
     info += "Current Session High Score: "+ofToString(high_score)+"\n";
     ofSetHexColor(0x444342);
     ofDrawBitmapString(info, 30, 30);
+    
+    if(space_held)
+        progressBar.draw();
 }
 
 //--------------------------------------------------------------
@@ -236,4 +241,11 @@ void ofApp::setLevel() {
         level = 2;
     else if(score > 6)
         level = 3;
+}
+
+void ofApp::createProgressBar() {
+    progressBar = ofxProgressBar(ofGetWidth()/6 - 50,ofGetHeight()/2 + 50,150,15,&power,2000);
+    progressBar.setBarColor(ofColor(255,192,203));
+    progressBar.setBackgroundColor(ofColor(255,255,255));
+    progressBar.setBorderSize(0);
 }
