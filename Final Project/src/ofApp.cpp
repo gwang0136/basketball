@@ -2,7 +2,7 @@
 
 //--------------------------------------------------------------
 void ofApp::initializeVariables() {
-    score = 1000;
+    score = 12345;
     level = 3;                      // start on easy
     moving = -1;                    // when reaching hard level, rim will move left first
     scored = false;

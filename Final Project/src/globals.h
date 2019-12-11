@@ -33,6 +33,6 @@ const int threshold = 10;
 const int speed = 5;
 
 /*Level Up Threshold*/
-const int to_level_up = 3;
+const int to_level_up = 1;
 
 #endif /* globals_h */
