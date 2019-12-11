@@ -24,4 +24,7 @@ const int backboard_offset_y = -60;
 /*Score Threshold*/
 const int threshold = 10;
 
+/*Move Speed*/
+const int speed = 5;
+
 #endif /* globals_h */

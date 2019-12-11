@@ -10,6 +10,7 @@ void ofApp::setup() {
     counted = false;
     shots = 0;
     prev = -1;
+    high_score = 0;
     ofSetVerticalSync(true);
     ofBackgroundHex(0xfdefc2);
     ofSetLogLevel(OF_LOG_NOTICE);
@@ -30,6 +31,7 @@ void ofApp::update() {
     box2d.update();
     setRims();
     setBackboard();
+    setLevel();
     checkIfScore();
     
     if(scored) {
@@ -44,9 +46,9 @@ void ofApp::update() {
     }
 
     if(space_held) {
-        power+=25;
+        if(power <= 2000)
+            power+=25;
     }
-    
 }
 
 
@@ -73,7 +75,7 @@ void ofApp::draw() {
     ofDrawRectangle(rims.at(0)->getPosition().x + rim_size/2,
                     rims.at(1)->getPosition().y - rim_size/2, hoop_length, hoop_width);
     
-    ofSetHexColor(0xffffff);
+    ofSetHexColor(0x000000);
     box2d.drawGround();
     
     string info = "";
@@ -81,6 +83,7 @@ void ofApp::draw() {
     info += "Let go of [space] to shoot\n";
     info += "Score: "+ofToString(score)+"\n";
     info += "Level: "+ofToString(level)+"\n";
+    info += "Current Session High Score: "+ofToString(high_score)+"\n";
     ofSetHexColor(0x444342);
     ofDrawBitmapString(info, 30, 30);
 }
@@ -123,6 +126,7 @@ void ofApp::createBall() {
     balls.push_back(ball);
 }
 
+//--------------------------------------------------------------
 void ofApp::setRims() {
     if(rims.empty()) {
         auto front_rim = make_shared<ofxBox2dRect>();
@@ -151,11 +155,12 @@ void ofApp::setRims() {
         {
             moving *= -1;
         }
-        rims.at(0)->setPosition(rims.at(0)->getPosition().x + moving*threshold,                                     rims.at(0)->getPosition().y);
-        rims.at(1)->setPosition(rims.at(1)->getPosition().x + moving*threshold,                                     rims.at(1)->getPosition().y);
+        rims.at(0)->setPosition(rims.at(0)->getPosition().x + moving*speed,                                     rims.at(0)->getPosition().y);
+        rims.at(1)->setPosition(rims.at(1)->getPosition().x + moving*speed,                                     rims.at(1)->getPosition().y);
     }
 }
 
+//--------------------------------------------------------------
 void ofApp::setBackboard() {
     if(backboards.empty()) {
         auto backboard = make_shared<ofxBox2dRect>();
@@ -192,8 +197,9 @@ void ofApp::reload() {
         shot = false;
         
         if(!scored) {
+            if(score > high_score)
+                high_score = score;
             score = 0;
-            level = 2;
         }
         else {
             scored = !scored;
@@ -205,6 +211,7 @@ void ofApp::reload() {
     }
 }
 
+//--------------------------------------------------------------
 void ofApp::checkIfScore() {
     for(auto &ball : balls) {
      if (ball->getPosition().x >= rims.at(0)->getPosition().x &&
@@ -219,4 +226,14 @@ void ofApp::checkIfScore() {
          }
      }
     }
+}
+
+//--------------------------------------------------------------
+void ofApp::setLevel() {
+    if(score >= 0 && score <= 3)
+        level = 1;
+    if(score >= 3 && score <= 6)
+        level = 2;
+    else if(score > 6)
+        level = 3;
 }

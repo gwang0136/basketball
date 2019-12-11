@@ -2,6 +2,7 @@
 #include "ofMain.h"
 #include "ofxBox2d.h"
 #include "globals.h"
+#include "ofxProgressBar.h"
 
 class ofApp : public ofBaseApp {
     
@@ -19,6 +20,7 @@ public:
     void checkIfScore();
     void setRims();
     void setBackboard();
+    void setLevel();
     
     ofxBox2d box2d;
     vector   <shared_ptr<ofxBox2dCircle>> balls;
@@ -36,4 +38,5 @@ public:
     bool counted;
     int shots;
     int prev;
+    int high_score;
 };
