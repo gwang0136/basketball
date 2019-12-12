@@ -29,5 +29,6 @@ A log of my work history on this project.
   - Successfully updated the styling of the basket.
   - Successfully implemented a high-score mechanic to keep track of the current high-score in the session.
   - Successfully implemented unit testing to test all non Box2D or OpenFrameworks related functions.
+  - Successfully completed a full in-depth ReadMe file.
   
   
