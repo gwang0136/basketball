@@ -12,7 +12,7 @@ How to install and run:
 
 2. Download this repository within the `[openframeworks directory]/apps/myApps/`
 
-3. Download [ofxBox2D](https://github.com/vanderlin/ofxBox2d) and [ofxProgresBar](https://github.com/atduskgreg/ofxProgressBar) into `[openframeworks directory]/addons/`
+3. Download [ofxBox2D](https://github.com/vanderlin/ofxBox2d) and [ofxProgressBar](https://github.com/atduskgreg/ofxProgressBar) into `[openframeworks directory]/addons/`
 
 4. Using the [Project Generator](https://openframeworks.cc/learning/01_basics/how_to_add_addon_to_project/), navigate to the repository, and click on "Update"
 
@@ -39,7 +39,8 @@ Change the number of consecutive shots needed before leveling up in [globals.h](
 ### Dependencies
 
 [ofxBox2D](https://github.com/vanderlin/ofxBox2d)
-[ofxProgresBar](https://github.com/atduskgreg/ofxProgressBar)
+
+[ofxProgressBar](https://github.com/atduskgreg/ofxProgressBar)
 
 ### Code Style
 
