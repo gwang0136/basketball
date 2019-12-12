@@ -29,10 +29,10 @@ const int support_height = 10;
 /*Score Threshold*/
 const int threshold = 10;
 
-/*Move Speed*/
+/*Level 3 Basket Move Speed*/
 const int speed = 5;
 
 /*Level Up Threshold*/
-const int to_level_up = 1;
+const int to_level_up = 3;
 
 #endif /* globals_h */
